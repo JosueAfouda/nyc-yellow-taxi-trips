@@ -26,6 +26,13 @@ def file_exists_in_gcs(bucket_name, gcs_path):
     blob = bucket.blob(gcs_path)
     return blob.exists()
 
+def upload_to_gcs(bucket_name, gcs_path, content):
+    """Upload binary content to a GCS blob."""
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(gcs_path)
+    blob.upload_from_string(content)
+    logging.info(f"Uploaded to gs://{bucket_name}/{gcs_path}")
+
 def upload_log_to_gcs():
     """Upload the log file to GCS."""
     #log_filename = f"{GCS_LOG_FOLDER}extract_log_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.log"
